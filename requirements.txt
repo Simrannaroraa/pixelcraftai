@@ -1,0 +1,24 @@
+# Core Web & UI
+streamlit>=1.35.0
+
+# Image Processing & Mathematics
+Pillow>=10.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Local AI Background Removal (Free U2-Net Neural Network)
+rembg>=2.0.50
+onnxruntime>=1.17.0
+
+# Natural Language Embeddings & Retrieval
+sentence-transformers>=2.6.0
+scikit-learn>=1.3.0
+torch>=2.1.0
+
+# Testing & Utilities
+pytest>=8.0.0
+python-dotenv>=1.0.0
+
+# Optional Cloud Providers (Disabled unless explicitly configured)
+# openai>=1.12.0
+# google-generativeai>=0.4.0

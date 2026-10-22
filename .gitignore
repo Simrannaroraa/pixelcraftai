@@ -1,0 +1,39 @@
+# Python Bytecode & Environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+
+# Data Directories (Exclude user uploads, versions, and local database)
+data/uploads/*
+data/versions/*
+data/thumbnails/*
+!data/uploads/.gitkeep
+!data/versions/.gitkeep
+!data/thumbnails/.gitkeep
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment Variables & Secrets
+.env
+.env.local
+*.pem
+*.key
+
+# Test and Coverage Artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Operating System & IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Streamlit logs
+.streamlit/*.log
