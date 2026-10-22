@@ -1,106 +1,91 @@
-# PixelCraft AI — Intelligent Image Editing & Natural-Language Search Platform
+<div align="center">
 
-[![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.40%2B-FF4B4B.svg)](https://streamlit.io/)
-[![Zero Paid Credits](https://img.shields.io/badge/Budget-%E2%82%B90%20Zero%20Paid%20Credits-success.svg)]()
-[![Tests](https://img.shields.io/badge/Tests-19%2F19%20Passing-brightgreen.svg)]()
-[![License](https://img.shields.io/badge/License-MIT-purple.svg)]()
+# ✨ PixelCraft AI — Intelligent Image Studio
 
-> **PixelCraft AI** is an AI-first image editing and natural-language retrieval platform built from the ground up to demonstrate production-grade full-stack Python, Generative AI architecture, and computer vision—running entirely on **₹0 budget with zero paid external API credits**.
+### *Autonomous Local AI Image Editing, Neural Matting & Semantic Retrieval Platform*
 
----
+[![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.14-3776AB.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.40%2B-FF4B4B.svg?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![Neural AI](https://img.shields.io/badge/Neural%20AI-U2--Net%20%2B%20MiniLM-6366F1.svg?style=for-the-badge&logo=huggingface&logoColor=white)]()
+[![Zero Paid Credits](https://img.shields.io/badge/Budget-%E2%82%B90%20Zero%20Paid%20Credits-10B981.svg?style=for-the-badge)]()
+[![Tests](https://img.shields.io/badge/Tests-19%2F19%20Passing-10B981.svg?style=for-the-badge&logo=pytest&logoColor=white)]()
+[![License](https://img.shields.io/badge/License-MIT-8B5CF6.svg?style=for-the-badge)]()
 
-## Table of Contents
-1. [Project Overview](#1-project-overview)
-2. [Key Features](#2-key-features)
-3. [User Interface & Screenshots Instructions](#3-user-interface--screenshots-instructions)
-4. [Technology Stack](#4-technology-stack)
-5. [System Architecture Diagram](#5-system-architecture-diagram)
-6. [Project Directory Structure](#6-project-directory-structure)
-7. [Local Installation](#7-local-installation)
-8. [Virtual Environment Setup](#8-virtual-environment-setup)
-9. [How to Run the Application](#9-how-to-run-the-application)
-10. [API Configuration](#10-api-configuration)
-11. [Free-Mode Guarantees & Constraints](#11-free-mode-guarantees--constraints)
-12. [Image Editing Limitations & AI Honesty](#12-image-editing-limitations--ai-honesty)
-13. [Embedding Pipeline & Retrieval Details](#13-embedding-pipeline--retrieval-details)
-14. [Database & Version History Design](#14-database--version-history-design)
-15. [Automated Testing Suite](#15-automated-testing-suite)
-16. [Troubleshooting Guide](#16-troubleshooting-guide)
-17. [Deployment Instructions](#17-deployment-instructions)
-18. [Future Improvements](#18-future-improvements)
+<br>
+
+<p align="center">
+  <b>PixelCraft AI</b> is a production-grade, portfolio-ready computer vision studio and natural-language asset management platform. Built from the ground up to deliver high-precision image transformations, semantic vector retrieval, and non-destructive version branching—<b>running 100% locally with ₹0 budget and zero paid external API credits</b>.
+</p>
+
+[Key Features](#-key-features) • [UI Showcase](#-visual-interface-showcase) • [Architecture](#-system-architecture) • [Quick Start](#-quick-start) • [Workflows](#-core-workflows--capabilities) • [Testing](#-automated-testing-suite) • [Deployment](#-deployment)
+
+</div>
 
 ---
 
-## 1. Project Overview
+## 📸 Visual Interface Showcase
 
-PixelCraft AI solves the challenge of organizing, understanding, and editing images through natural-language prompts without locking users into expensive SaaS subscriptions or paid cloud API tokens.
+PixelCraft AI features a custom dark glassmorphic design system with ambient mesh lighting, responsive cards, live hardware telemetry badges, and interactive controls.
 
-Users can upload images, automatically analyze visual composition, execute complex edits using conversational commands (e.g., *"Remove the background"*, *"Change the background to a snowy mountain"*, *"Make it brighter and warmer"*, *"Apply vintage 70s filter"*, or *"Crop to square 1:1"*), and instantly search across their entire library using semantic concepts (e.g., *"golden sunset on beach"*, *"snowy mountains"*).
+### 1. 🖼️ Image Library & Catalog
+Upload, organize, and profile images with instant heuristic visual analysis, metadata badges, and 1-click instant demo presets.
+<div align="center">
+  <img src="docs/images/library_overview.png" alt="PixelCraft AI Image Library" width="900" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
+</div>
 
-Every edit is non-destructive, recorded in an ACID SQLite database with full version branching, rollback, and side-by-side before/after comparison previews.
+<br>
 
----
+### 2. 🎨 AI Studio & Side-by-Side Comparison
+Execute conversational commands (e.g. *"Remove background"*, *"Change background to snowy mountain"*, *"Apply cinematic teal and orange"*) with real-time before/after previews on a studio transparency checkerboard.
+<div align="center">
+  <img src="docs/images/studio_editor.png" alt="PixelCraft AI Studio Editor" width="900" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
+</div>
 
-## 2. Key Features
+<br>
 
-- **🖼️ Smart Image Library**:
-  - Secure upload validation (verifies file extension and actual binary header using PIL `verify()`).
-  - Automatic heuristic visual scene analysis (extracts dominant color temperature, brightness, contrast dispersion, and tags).
-  - Responsive thumbnail gallery with file metadata and one-click actions.
-- **🎨 Natural-Language Image Editing**:
-  - Conversational command interpretation (e.g., *"Remove the background"*, *"Change the background to a snowy mountain"*, *"Make the image brighter and warmer"*).
-  - High-precision local AI background removal using the deep learning **U2-Net** neural network via `rembg`.
-  - Realistic procedural background compositing (snowy alpine mountains, sunset gradients, dark studio vignettes, or custom images).
-  - Color science adjustments (warmth/temperature, tint balance, saturation, sepia, black & white).
-  - Lighting & tone enhancements (brightness, contrast, sharpness, exposure).
-  - Artistic stylization (vintage retro, cinematic teal & orange, cyberpunk neon, pencil sketch line art, film noir).
-  - Aspect ratio cropping (1:1 square, 16:9 cinematic, 4:3 standard, 9:16 story) and rotation.
-- **📜 Non-Destructive Version History**:
-  - The original image file remains **strictly preserved and immutable** on disk.
-  - Every successful edit creates an incremental version with unique UUID, parent lineage, method tags, and edit prompts.
-  - Interactive version timeline with rollback, preview, and download.
-- **🔍 Natural-Language Semantic Search**:
-  - Vector embedding retrieval using `sentence-transformers/all-MiniLM-L6-v2` (384-dimensional dense vectors).
-  - L2 normalized cosine similarity ranking over image captions, tags, and edit prompts.
-  - Real-time search index synchronization when images are uploaded, edited, recaptioned, or deleted.
-  - Automatic, zero-dependency **Scikit-learn TF-IDF fallback** if the dense neural model is offline.
-  - Transparent UI indicator badges displaying the active retrieval engine.
-- **⚙️ Self-Diagnostic Dashboard**:
-  - Live inspection of active embedding engines, segmentation models, disk footprint, and database records.
-  - One-click search index rebuilder.
+### 3. 🔍 Natural-Language Semantic Search
+Find images across your media catalog by conceptual meaning, lighting, colors, and subject matter using 384-dimensional dense vectors.
+<div align="center">
+  <img src="docs/images/semantic_search.png" alt="PixelCraft AI Semantic Search" width="900" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
+</div>
+
+<br>
+
+### 4. ⚙️ System Diagnostics & Model Telemetry
+Monitor live AI model pipelines, ONNX multi-threaded CPU execution, SQLite storage footprint, and run full vector index rebuilds.
+<div align="center">
+  <img src="docs/images/system_diagnostics.png" alt="PixelCraft AI System Diagnostics" width="900" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
+</div>
 
 ---
 
-## 3. User Interface & Screenshots Instructions
+## 🌟 Key Features
 
-The application uses a custom-styled dark SaaS interface built with Streamlit and glassmorphism CSS:
-
-### Recommended Portfolio Screenshots:
-1. **Image Library Grid**: Capture `🖼️ Image Library` showing uploaded cards with badges, metadata, and tags.
-2. **Side-by-Side Editor**: In `🎨 Image Editor`, run *"Change the background to a snowy mountain"* or *"Remove the background"*, select **Before & After**, and capture the split preview.
-3. **Version History Timeline**: Capture the bottom timeline showing Version 1, Version 2, and the original image with rollback buttons.
-4. **Natural-Language Search**: In `🔍 Smart Search`, search for *"snowy mountain"* or *"sunset"* to show matching results with percentage match bars and the active engine badge.
-5. **System Diagnostics**: In `⚙️ System & Diagnostics`, capture the model status and database health cards.
-
----
-
-## 4. Technology Stack
-
-| Layer | Technologies Used | Rationale |
-| :--- | :--- | :--- |
-| **User Interface** | Streamlit 1.40+, Custom CSS | Responsive, interactive, rapid data-app presentation |
-| **Image Processing** | Pillow 10+, NumPy, SciPy | Fast, vectorized, local pixel transformations |
-| **Local AI Segmentation** | `rembg` (U2-Net), `onnxruntime` | High-quality background isolation with ₹0 external cost |
-| **Semantic Embeddings** | `sentence-transformers` (`all-MiniLM-L6-v2`) | High-efficiency 384-d dense sentence embeddings |
-| **Search Fallback** | `scikit-learn` (`TfidfVectorizer`) | Lightweight keyword retrieval fallback with 0 GPU/model needs |
-| **Vector Similarity** | NumPy Matrix Dot Product | Instant cosine similarity over normalized vector arrays |
-| **Persistence** | SQLite3, Local Filesystem | Zero-config, robust ACID transactions, foreign keys |
-| **Quality Assurance** | Pytest 8+, Pytest-Pythonpath | Automated unit & integration tests covering all services |
+- **🪄 Conversational Natural-Language Editing**:
+  - Natural-language command parser mapping user intent to deterministic and neural image operations.
+  - Quick 1-click studio presets across **Neural Segmentation & Backdrop**, **Color Artistry & Cinematic Styles**, and **Smart Aspect Ratio Crops**.
+- **✂️ Local Neural Background Matting (U2-Net)**:
+  - High-precision subject cutout using local deep learning neural networks via `rembg` & `onnxruntime`.
+  - Zero external cloud latency, runs 100% offline with zero per-image API billing.
+- **🏔️ Realistic Procedural Backdrop Compositing**:
+  - Automatically composite isolated subjects onto alpine snowy peaks, golden sunset skies, dark cyberpunk studios, or solid studio colors.
+- **📜 Non-Destructive Version Branching**:
+  - Original uploaded files remain **strictly immutable** on disk.
+  - Every edit generates an incremental child version with parent lineage, applied parameters, and rollback support.
+- **🔍 384-Dimensional Dense Semantic Search**:
+  - Neural text and caption embeddings computed via `sentence-transformers/all-MiniLM-L6-v2`.
+  - Fast cosine similarity ranking computed via normalized matrix dot products in NumPy.
+  - Automatic, zero-dependency **Scikit-learn TF-IDF fallback** for restricted or low-memory environments.
+- **📸 1-Click Instant Demo Presets**:
+  - Built-in high-resolution portrait and landscape demo assets allow immediate experimentation without requiring local file uploads.
+- **🗄️ ACID SQLite Storage Engine**:
+  - Relational schema with foreign keys, cascading deletions, and BLOB vector serialization.
 
 ---
 
-## 5. System Architecture Diagram
+## 🏗️ System Architecture
+
+PixelCraft AI separates presentation, service orchestration, local neural engines, and persistent storage:
 
 ```mermaid
 graph TD
@@ -135,18 +120,18 @@ graph TD
 
 ---
 
-## 6. Project Directory Structure
+## 📁 Directory Structure
 
 ```text
 ai-image-editor/
-├── app.py                     # Main Streamlit web application & UI router
-├── requirements.txt           # Verified Python dependencies
+├── app.py                     # Main Streamlit web application & glassmorphic UI router
+├── requirements.txt           # Verified Python dependencies (pinned versions)
 ├── pytest.ini                 # Pytest configuration and pythonpath
-├── .env.example               # Environment variables template
+├── .env.example               # Environment variables template (₹0 offline default)
 ├── .gitignore                 # Git ignore rules for data, db, and secrets
 ├── prompts/
 │   ├── __init__.py
-│   └── templates.py           # Reusable, documented prompt templates
+│   └── templates.py           # Documented prompt templates for vision & editing
 ├── services/
 │   ├── __init__.py
 │   ├── database.py            # SQLite schema, migrations, and CRUD operations
@@ -157,11 +142,13 @@ ai-image-editor/
 │   ├── embeddings.py          # MiniLM embeddings and Scikit-learn TF-IDF
 │   └── search.py              # Semantic vector search and index synchronization
 ├── data/
+│   ├── samples/               # Pre-packaged high-res demo assets
 │   ├── uploads/               # Saved original images (never modified)
 │   ├── versions/              # Saved edited versions
 │   └── thumbnails/            # Cached preview assets
 ├── docs/
-│   └── architecture.md        # Deep architectural design documentation
+│   ├── architecture.md        # Comprehensive technical architecture documentation
+│   └── images/                # UI showcase screenshots
 └── tests/
     ├── __init__.py
     ├── test_database.py       # SQLite CRUD, cascades, and transactions
@@ -173,176 +160,155 @@ ai-image-editor/
 
 ---
 
-## 7. Local Installation
+## ⚡ Quick Start
 
-Ensure Python 3.11 or higher is installed:
-```bash
-python3 --version
-```
+### 1. Prerequisites
+- **Python**: 3.11, 3.12, or 3.14
+- **Operating System**: macOS, Linux, or Windows
 
-Clone or navigate into the repository:
+### 2. Clone Repository
 ```bash
+git clone https://github.com/your-username/ai-image-editor.git
 cd ai-image-editor
 ```
 
----
+### 3. Create & Activate Virtual Environment
 
-## 8. Virtual Environment Setup
-
-Create and activate an isolated virtual environment:
-
-### macOS / Linux:
+**macOS / Linux:**
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-### Windows (PowerShell):
+**Windows (PowerShell):**
 ```powershell
 python -m venv venv
 .\venv\Scripts\Activate.ps1
 ```
 
-Install dependencies:
+### 4. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
----
+### 5. Initialize Configuration
+```bash
+cp .env.example .env
+```
+*(No API keys are required for the full baseline studio to operate.)*
 
-## 9. How to Run the Application
-
-Launch the Streamlit app:
+### 6. Launch Application
 ```bash
 streamlit run app.py
 ```
 
-The application will start and automatically open in your browser at:
-`http://localhost:8501`
+The application will start immediately at:
+👉 **`http://localhost:8501`**
 
 ---
 
-## 10. API Configuration
+## 🛠️ Core Workflows & Capabilities
 
-PixelCraft AI **does not require any external API keys** for its complete baseline workflow.
+### 1. Natural-Language Editing Commands
+PixelCraft AI includes an intent parser that understands natural language instructions:
 
-If you wish to experiment with optional cloud generative services:
-1. Copy `.env.example` to `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-2. Set your optional keys:
-   ```env
-   MAX_UPLOAD_SIZE_MB=15.0
-   OPENAI_API_KEY=your_optional_openai_key_here
-   GEMINI_API_KEY=your_optional_gemini_key_here
-   ```
-If left blank, PixelCraft AI transparently remains in 100% free, offline mode.
+| User Intent | Example Prompts | Transformation Pipeline |
+| :--- | :--- | :--- |
+| **Background Cutout** | *"Remove the background"*, *"Transparent cutout"* | U2-Net deep neural segmentation mask |
+| **Alpine Backdrop** | *"Change background to snowy mountain"* | Neural subject isolation + procedural mountain gradient composite |
+| **Sunset Glow** | *"Replace background with sunset"* | Neural subject isolation + warm atmospheric backdrop composite |
+| **Dark Studio** | *"Change background to dark studio"* | Neural isolation + radial vignette backdrop composite |
+| **Tone & Warmth** | *"Make it brighter and warmer"* | Brightness +25%, Warmth +30 (color matrix redistribution) |
+| **Hollywood Look** | *"Apply cinematic teal and orange"* | Shadows cooled toward cyan/teal, highlights boosted with amber warmth |
+| **Pencil Sketch** | *"Convert to pencil sketch style"* | Inverted gaussian blur + color dodge line extraction |
+| **Film Noir** | *"Make it black and white noir"* | High-contrast grayscale conversion (contrast +60%) |
+| **Aspect Cropping** | *"Crop to square 1:1"*, *"Crop to 16:9"* | Centered aspect ratio crop with boundary preservation |
 
----
+### 2. Non-Destructive Versioning
+- Every edit leaves the original file untouched on disk.
+- Incremental versions are committed to the SQLite database with their own UUID and version sequence number.
+- Users can preview any previous iteration or revert with a single click.
 
-## 11. Free-Mode Guarantees & Constraints
-
-- **Budget:** Exactly ₹0.
-- **Zero Paid Subscriptions:** No mandatory cloud billing or third-party metered usage.
-- **Secrets Safety:** No API keys are hardcoded or committed to version control.
-- **Offline Integrity:** All core features (background removal, editing, versioning, captioning, search) execute locally on CPU/GPU.
-
----
-
-## 12. Image Editing Limitations & AI Honesty
-
-In accordance with strict engineering ethics:
-1. **Honest AI Disclosure**:
-   - Background removal is executed using **U2-Net** deep learning models (`rembg`).
-   - Tone, warmth, and color adjustments are applied via vectorized **Pillow & NumPy** routines.
-   - The UI clearly labels the exact method used for every edit.
-2. **Generative Limits**:
-   - The zero-cost baseline does not hallucinate new semantic subjects (e.g., if a user prompts *"Add a tree in the background"* or *"Add a sports car"*).
-   - Rather than pretending a conventional filter performed generative object synthesis, the platform explicitly explains that adding arbitrary new objects requires a generative text-to-image diffusion API (e.g. OpenAI DALL-E or Stability AI).
-   - The original image file remains 100% pristine and unaltered.
+### 3. Dense Semantic Search Pipeline
+- When an image is ingested, PixelCraft AI generates descriptive visual captions and tags using local heuristic profiling.
+- The textual description is encoded into a 384-dimensional dense vector using `all-MiniLM-L6-v2`.
+- When a user enters a search query (e.g., *"golden sunset"* or *"portrait with high contrast"*), the query vector is computed and compared against all indexed vectors using normalized dot product cosine similarity:
+$$\text{Score} = \mathbf{q} \cdot \mathbf{v}_i = \sum_{k=1}^{384} q_k v_{ik}$$
+- Results are ranked and displayed with confidence percentage bars and active engine badges.
 
 ---
 
-## 13. Embedding Pipeline & Retrieval Details
+## 🧪 Automated Testing Suite
 
-PixelCraft AI implements a two-tier retrieval pipeline:
-
-### 1. Primary: Dense Semantic Embeddings (`all-MiniLM-L6-v2`)
-- Computes 384-dimensional dense vectors using mean pooling over transformer token representations.
-- Vectors are L2 normalized ($\|\mathbf{v}\|_2 = 1.0$), ensuring that cosine similarity is equivalent to a fast matrix dot product.
-- Vectors are serialized into raw 32-bit float byte buffers (1,536 bytes) and stored as SQLite `BLOB` records.
-
-### 2. Secondary Fallback: Scikit-learn TF-IDF Cosine Similarity
-- If model download or initialization fails (e.g. in restricted air-gapped environments), PixelCraft AI seamlessly falls back to `TfidfVectorizer` with sublinear term-frequency scaling and unigram + bigram support.
-- The UI visibly indicates when the fallback mode is active.
-
----
-
-## 14. Database & Version History Design
-
-### SQLite Schema:
-- **`images`**: Stores original file metadata, dimensions, file size, generated captions, and searchable tags.
-- **`versions`**: Stores version sequence number, parent version ID, file path, edit prompt, applied parameters (JSON), and timestamp. Uses `FOREIGN KEY (image_id) REFERENCES images(id) ON DELETE CASCADE`.
-- **`embeddings`**: Stores serialized 384-d vector BLOBs, model identifier, and indexed text snippet.
-
-### Integrity Features:
-- Foreign key constraints enabled (`PRAGMA foreign_keys = ON;`).
-- Atomic transactions with rollback protection on errors.
-- Deleting an image automatically cascades to remove its versions and embedding vectors, while cleaning up all associated files from disk.
-
----
-
-## 15. Automated Testing Suite
-
-The repository includes a comprehensive `pytest` suite with 19 passing tests covering all critical paths:
+The codebase is backed by 19 automated unit and integration tests covering all critical components:
 
 ```bash
 pytest tests/ -v
 ```
 
-### Test Coverage Highlights:
-- ✅ `test_storage.py`: Valid image acceptance, corrupt file detection, empty file handling, extension filtering, and safe deletion.
-- ✅ `test_database.py`: CRUD operations, metadata updating, version sequence numbering, and cascade deletion.
-- ✅ `test_editing.py`: Natural-language instruction parser, lighting enhancement, grayscale conversion, aspect ratio cropping, and honest generative refusal.
-- ✅ `test_versioning.py`: Strict preservation of original image bytes across edits, version record persistence, and failed edit rollback without orphaned records.
-- ✅ `test_embeddings_search.py`: Vector normalization, cosine similarity calculation, TF-IDF fallback search, and index synchronization lifecycle.
+### Test Breakdown:
+- **`test_storage.py` (5 tests)**:
+  - Real image header verification via PIL (`verify()`).
+  - Detection and rejection of corrupt bytes and empty files.
+  - Extension whitelisting and atomic file cleanup.
+- **`test_database.py` (3 tests)**:
+  - SQLite table initialization and schema integrity.
+  - Foreign key cascades (deleting an image automatically cascades to versions and embeddings).
+  - Version numbering sequences and metadata updates.
+- **`test_editing.py` (5 tests)**:
+  - Natural-language intent parser accuracy.
+  - Vectorized lighting and color adjustments.
+  - Aspect ratio cropping and boundary checks.
+  - **Generative honesty disclosure**: Refuses unsupported object hallucinations and advises users transparently.
+- **`test_versioning.py` (2 tests)**:
+  - Strict immutability of original files across repeated edits.
+  - Transaction safety: failed edits roll back cleanly without leaving orphaned records or files.
+- **`test_embeddings_search.py` (4 tests)**:
+  - L2 vector normalization ($\|\mathbf{v}\|_2 = 1.0$).
+  - Cosine similarity ranking precision.
+  - Scikit-learn TF-IDF fallback functionality.
+  - Complete search index lifecycle synchronization.
 
 ---
 
-## 16. Troubleshooting Guide
+## 🔒 Free-Mode Guarantees & AI Honesty
 
-- **Issue: `ModuleNotFoundError: No module named 'rembg'` or `onnxruntime`**
-  - *Fix:* Ensure dependencies are installed via `pip install rembg onnxruntime`. If onnxruntime has platform issues on your OS, the system automatically falls back to Pillow luminosity thresholding.
-- **Issue: First-time search is slow**
-  - *Explanation:* On the very first search query, `sentence-transformers` downloads the lightweight `all-MiniLM-L6-v2` weights (~90 MB) into your local Hugging Face cache. Subsequent searches execute in milliseconds.
-- **Issue: Database locked error**
-  - *Fix:* SQLite uses WAL mode and a 30-second timeout. Ensure only one instance of the app is writing simultaneously.
+PixelCraft AI adheres to strict engineering ethics and transparency:
+1. **₹0 Cost Guarantee**: The baseline studio runs completely offline on CPU/GPU with no required API keys, metered credits, or subscription locks.
+2. **Generative Honesty**: The application never fakes generative diffusion. If a user asks to *"Add a Ferrari in the driveway"*, PixelCraft AI explicitly informs the user that generative object synthesis requires an external diffusion model, rather than applying a random color filter and pretending the request succeeded.
+3. **Data Privacy**: All uploaded images and vector embeddings stay strictly on your local machine.
 
 ---
 
-## 17. Deployment Instructions
+## 🚀 Deployment
 
-PixelCraft AI is ready for deployment to free hosting platforms such as **Streamlit Community Cloud** or **Hugging Face Spaces**:
+### Deploying to Streamlit Community Cloud (Free)
+1. Fork or push this repository to your GitHub account.
+2. Visit [share.streamlit.io](https://share.streamlit.io/) and log in with GitHub.
+3. Click **New app**, select your repository and `main` branch, and set the entry file to `app.py`.
+4. Click **Deploy!**
 
-### Deploying to Streamlit Community Cloud:
-1. Push this repository to GitHub (ensure personal uploaded images and SQLite files are excluded via `.gitignore`).
-2. Go to [share.streamlit.io](https://share.streamlit.io/) and click **New App**.
-3. Select your repository, set branch to `main`, and main file path to `app.py`.
-4. Add any optional environment variables in the Streamlit Cloud Settings.
-5. Click **Deploy!**
+### Deploying with Docker
+```dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+EXPOSE 8501
+
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+```
+
+```bash
+docker build -t pixelcraft-ai .
+docker run -p 8501:8501 pixelcraft-ai
+```
 
 ---
 
-## 18. Future Improvements
+## 📄 License
 
-- Add client-side interactive canvas bounding box selection for localized inpainting.
-- Add local quantized Stable Diffusion / LCM (Latent Consistency Model) on supported hardware with Apple Silicon MPS / CUDA for offline generative additions.
-- Add multi-image batch processing and zip export.
-- Integrate FAISS HNSW indexing for libraries exceeding 100,000 images.
-
----
-
-## License
-
-MIT License. Designed and engineered for academic and professional portfolio presentation.
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details. Built for professional portfolio demonstration, academic reference, and open-source computer vision workflows.

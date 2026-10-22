@@ -1,5 +1,6 @@
 # Core Web & UI
 streamlit>=1.35.0
+pyarrow>=14.0.0,<25.0.0
 
 # Image Processing & Mathematics
 Pillow>=10.0.0
@@ -14,6 +15,7 @@ onnxruntime>=1.17.0
 sentence-transformers>=2.6.0
 scikit-learn>=1.3.0
 torch>=2.1.0
+torchvision>=0.16.0
 
 # Testing & Utilities
 pytest>=8.0.0

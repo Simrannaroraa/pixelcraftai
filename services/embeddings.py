@@ -14,51 +14,93 @@ from sklearn.metrics.pairwise import cosine_similarity as sklearn_cosine_sim
 
 logger = logging.getLogger(__name__)
 
+import threading
+
 # Model configurations
 PRIMARY_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 EMBEDDING_DIM = 384
 
-# Global cached model instance
+# Global cached model instance and thread safety lock
 _ST_MODEL = None
 _MODEL_INITIALIZED = False
 _MODEL_LOAD_ERROR = None
+_MODEL_LOCK = threading.Lock()
+
+
+def is_transformer_installed() -> bool:
+    """Check if sentence-transformers is installed in the python environment."""
+    try:
+        import sentence_transformers  # noqa: F401
+        return True
+    except ImportError:
+        return False
 
 
 def get_embedding_model():
     """
-    Lazy load SentenceTransformer model. Returns instance or None if unavailable.
+    Thread-safe lazy loader for the SentenceTransformer model.
+    Returns instance or None if unavailable.
     Caches the model instance in memory.
     """
     global _ST_MODEL, _MODEL_INITIALIZED, _MODEL_LOAD_ERROR
     if _MODEL_INITIALIZED:
         return _ST_MODEL
 
-    try:
-        from sentence_transformers import SentenceTransformer
-        logger.info("Loading SentenceTransformer model '%s'...", PRIMARY_MODEL_NAME)
-        _ST_MODEL = SentenceTransformer(PRIMARY_MODEL_NAME)
-        _MODEL_INITIALIZED = True
-        _MODEL_LOAD_ERROR = None
-        logger.info("SentenceTransformer model loaded successfully.")
-        return _ST_MODEL
-    except Exception as e:
-        _MODEL_INITIALIZED = True
-        _MODEL_LOAD_ERROR = str(e)
-        _ST_MODEL = None
-        logger.warning("SentenceTransformer failed to load: %s. Using TF-IDF fallback.", e)
-        return None
+    with _MODEL_LOCK:
+        if _MODEL_INITIALIZED:
+            return _ST_MODEL
+
+        try:
+            from sentence_transformers import SentenceTransformer
+            logger.info("Loading SentenceTransformer model '%s'...", PRIMARY_MODEL_NAME)
+            _ST_MODEL = SentenceTransformer(PRIMARY_MODEL_NAME)
+            _MODEL_INITIALIZED = True
+            _MODEL_LOAD_ERROR = None
+            logger.info("SentenceTransformer model loaded successfully.")
+            return _ST_MODEL
+        except Exception as e:
+            _MODEL_INITIALIZED = True
+            _MODEL_LOAD_ERROR = str(e)
+            _ST_MODEL = None
+            logger.warning("SentenceTransformer failed to load: %s. Using TF-IDF fallback.", e)
+            return None
 
 
 def get_active_embedding_engine_info() -> Dict[str, Any]:
-    """Return status and details of the active embedding engine."""
-    model = get_embedding_model()
-    if model is not None:
+    """
+    Return status and details of the active embedding engine without blocking UI header render.
+    If the model is already loaded, reports active. If package is installed, reports ready.
+    Otherwise reports TF-IDF fallback.
+    """
+    global _ST_MODEL, _MODEL_INITIALIZED, _MODEL_LOAD_ERROR
+
+    if _MODEL_INITIALIZED:
+        if _ST_MODEL is not None:
+            return {
+                "mode": "semantic_embedding",
+                "model_name": PRIMARY_MODEL_NAME,
+                "dimension": EMBEDDING_DIM,
+                "status": "active",
+                "description": "Dense semantic vectors via all-MiniLM-L6-v2"
+            }
+        else:
+            return {
+                "mode": "tfidf_fallback",
+                "model_name": "scikit-learn/TfidfVectorizer",
+                "dimension": "dynamic_vocab",
+                "status": "fallback",
+                "error": _MODEL_LOAD_ERROR,
+                "description": "TF-IDF keyword cosine similarity fallback"
+            }
+
+    # Not yet loaded in memory: inspect environment availability without blocking
+    if is_transformer_installed():
         return {
             "mode": "semantic_embedding",
             "model_name": PRIMARY_MODEL_NAME,
             "dimension": EMBEDDING_DIM,
-            "status": "active",
-            "description": "Dense semantic vectors via all-MiniLM-L6-v2"
+            "status": "ready",
+            "description": "Dense semantic vectors via all-MiniLM-L6-v2 (ready)"
         }
     else:
         return {
@@ -66,7 +108,6 @@ def get_active_embedding_engine_info() -> Dict[str, Any]:
             "model_name": "scikit-learn/TfidfVectorizer",
             "dimension": "dynamic_vocab",
             "status": "fallback",
-            "error": _MODEL_LOAD_ERROR,
             "description": "TF-IDF keyword cosine similarity fallback"
         }
 

@@ -1,7 +1,7 @@
 [theme]
 primaryColor = "#6366f1"
-backgroundColor = "#0f172a"
-secondaryBackgroundColor = "#1e293b"
+backgroundColor = "#0b0f19"
+secondaryBackgroundColor = "#111827"
 textColor = "#f8fafc"
 font = "sans serif"
 
@@ -10,3 +10,7 @@ headless = true
 enableCORS = false
 enableXsrfProtection = true
 maxUploadSize = 15
+fileWatcherType = "none"
+
+[browser]
+gatherUsageStats = false
